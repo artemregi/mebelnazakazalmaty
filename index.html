@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;-webkit-font-smoothing:antialiased;}
+a{color:#0071e3;text-decoration:none;}
+a:hover{color:#0058b0;}
+input,select{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;}
+#portfolioTrack::-webkit-scrollbar{display:none;}
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;background:#ffffff;color:#1d1d1f;min-height:100vh;overflow-x:hidden;position:relative;">
+
+  <header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 clamp(16px,4vw,48px);height:52px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+    <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+      <div style="width:26px;height:26px;border-radius:7px;background:#1d1d1f;color:#ffffff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;">m</div>
+      <div style="font-weight:600;font-size:15px;letter-spacing:-0.01em;white-space:nowrap;">mebelnazakazalmaty</div>
+    </div>
+
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ true }}">
+      <button onClick="{{ toggleMenu }}" aria-label="Menu" style="background:none;border:none;padding:8px;display:flex;flex-direction:column;gap:5px;cursor:pointer;">
+        <span style="width:20px;height:1.5px;background:#1d1d1f;display:block;"></span>
+        <span style="width:20px;height:1.5px;background:#1d1d1f;display:block;"></span>
+        <span style="width:20px;height:1.5px;background:#1d1d1f;display:block;"></span>
+      </button>
+    </sc-if>
+
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:flex;align-items:center;gap:clamp(18px,2vw,32px);flex-wrap:wrap;">
+        <a href="#portfolio" onClick="{{ scrollToPortfolio }}" style="font-size:12px;font-weight:400;color:#1d1d1f;">Портфолио</a>
+        <a href="#about" onClick="{{ scrollToAbout }}" style="font-size:12px;font-weight:400;color:#1d1d1f;">О компании</a>
+        <a href="#contact" onClick="{{ scrollToContact }}" style="font-size:12px;font-weight:400;color:#1d1d1f;">Контакты</a>
+      </nav>
+      <a href="#contact" onClick="{{ scrollToContact }}" style="background:{{ accentColor }};color:#ffffff;padding:9px 18px;border-radius:980px;font-size:12px;font-weight:400;white-space:nowrap;" style-hover="background:#0058b0;">Оставить заявку</a>
+    </sc-if>
+
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <nav style="position:absolute;top:100%;left:0;right:0;background:#ffffff;border-bottom:1px solid rgba(0,0,0,0.08);padding:20px clamp(16px,4vw,48px);display:flex;flex-direction:column;gap:18px;box-shadow:0 12px 24px rgba(0,0,0,0.08);">
+        <a href="#portfolio" onClick="{{ scrollToPortfolio }}" style="font-size:15px;font-weight:500;color:#1d1d1f;">Портфолио</a>
+        <a href="#about" onClick="{{ scrollToAbout }}" style="font-size:15px;font-weight:500;color:#1d1d1f;">О компании</a>
+        <a href="#contact" onClick="{{ scrollToContact }}" style="font-size:15px;font-weight:500;color:#1d1d1f;">Контакты</a>
+        <a href="#contact" onClick="{{ scrollToContact }}" style="background:{{ accentColor }};color:#ffffff;padding:12px 20px;border-radius:980px;font-size:14px;font-weight:500;text-align:center;">Оставить заявку</a>
+      </nav>
+    </sc-if>
+  </header>
+
+  <section style="position:relative;width:100%;aspect-ratio:{{ heroAspect }};min-height:420px;">
+    <image-slot id="hero" shape="rect" src="./assets/hero_new.jpg" placeholder="Фото кухни / интерьера — герой" style="display:block;width:100%;height:100%;"></image-slot>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.82) 100%);pointer-events:none;"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:0 clamp(16px,4vw,48px) clamp(28px,5vw,56px);color:#ffffff;text-align:center;">
+      <div style="font-size:13px;font-weight:500;letter-spacing:0.02em;color:rgba(255,255,255,0.85);margin-bottom:12px;">20+ лет экспертности · Сотни реализованных VIP-объектов · Строгое соблюдение контракта</div>
+      <h1 style="font-weight:600;letter-spacing:-0.02em;font-size:clamp(2rem,5.2vw,3.6rem);line-height:1.07;margin:0 auto;max-width:760px;">Безупречная эстетика. Интерьер без компромиссов.</h1>
+      <p style="font-weight:400;font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.4;margin:16px auto 0;max-width:560px;color:rgba(255,255,255,0.88);">Создаём эксклюзивные интерьерные решения для тех, кто ценит безупречность в каждой детали. Более 20 лет мы воплощаем самые амбициозные дизайн-проекты в Алматы — объединяя передовые европейские технологии и топовые комплектующие.</p>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:28px;">
+        <a href="#contact" onClick="{{ scrollToContact }}" style="background:{{ accentColor }};color:#ffffff;padding:13px 26px;border-radius:980px;font-size:15px;font-weight:400;" style-hover="background:#0058b0;">Рассчитать проект</a>
+        <a href="#portfolio" onClick="{{ scrollToPortfolio }}" style="background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.5);color:#ffffff;padding:13px 26px;border-radius:980px;font-size:15px;font-weight:400;">Смотреть галерею</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(20px,3vw,32px) clamp(16px,4vw,48px);background:#1d1d1f;">
+    <div style="display:{{ statsDisplay }};flex-direction:column;grid-template-columns:{{ cols3 }};max-width:1000px;margin:0 auto;">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+        <div style="display:flex;align-items:baseline;justify-content:{{ statsJustify }};gap:10px;padding:{{ statsPadding }};border-top:{{ s.borderTop }};border-left:{{ s.borderLeft }};">
+          <div style="font-weight:600;letter-spacing:-0.02em;font-size:clamp(1.4rem,2.4vw,1.9rem);color:#ffffff;flex-shrink:0;">{{ s.number }}</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:13px;line-height:1.35;">{{ s.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="about" style="padding:clamp(48px,7vw,88px) clamp(16px,4vw,48px);">
+    <h2 style="font-weight:600;letter-spacing:-0.015em;font-size:clamp(1.6rem,3.2vw,2.3rem);line-height:1.15;margin:0 0 14px;max-width:640px;">Ваш комфорт — наша главная ответственность</h2>
+    <p style="color:#6e6e73;font-size:16px;line-height:1.5;max-width:600px;margin:0 0 clamp(32px,4vw,44px);">Ремонт и обустройство часто превращаются в стресс: скрытые платежи, сорванные сроки, кривые стыки. Мы полностью меняем эти правила — берём на себя абсолютную ответственность за каждую деталь.</p>
+    <div style="display:grid;grid-template-columns:{{ cols3 }};gap:clamp(16px,3vw,24px);">
+      <sc-for list="{{ trustPoints }}" as="t" hint-placeholder-count="3">
+        <div style="background:#f5f5f7;border-radius:18px;padding:28px;">
+          <span style="width:26px;height:26px;display:block;color:{{ accentColor }};margin-bottom:16px;" dangerouslySetInnerHTML="{{ t.iconHtml }}"></span>
+          <div style="font-weight:600;font-size:16px;margin-bottom:8px;letter-spacing:-0.01em;">{{ t.title }}</div>
+          <div style="color:#6e6e73;font-size:14px;line-height:1.55;">{{ t.desc }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="services" style="padding:0 clamp(16px,4vw,48px) clamp(48px,7vw,88px);display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:clamp(32px,4vw,56px);align-items:center;">
+    <div>
+      <h2 style="font-weight:600;letter-spacing:-0.015em;font-size:clamp(1.6rem,3.2vw,2.3rem);line-height:1.15;margin:0 0 26px;">Решения, которые преображают дом</h2>
+      <sc-for list="{{ categories }}" as="c" hint-placeholder-count="3">
+        <div style="display:flex;gap:14px;margin-bottom:24px;">
+          <span style="width:24px;height:24px;flex-shrink:0;color:{{ accentColor }};margin-top:2px;" dangerouslySetInnerHTML="{{ c.iconHtml }}"></span>
+          <div>
+            <div style="font-weight:600;font-size:16px;margin-bottom:4px;letter-spacing:-0.01em;">{{ c.title }}</div>
+            <div style="color:#6e6e73;font-size:14px;line-height:1.5;">{{ c.desc }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="position:relative;width:100%;">
+      <div style="position:relative;width:100%;padding-top:125%;border-radius:18px;overflow:hidden;">
+        <image-slot id="ideaMain" shape="rect" src="./assets/idea_main_v2.jpg" placeholder="Фото — кухонный остров" style="position:absolute;inset:0;width:100%;height:100%;"></image-slot>
+      </div>
+      <div style="position:absolute;bottom:-16px;right:-12px;width:52%;border:6px solid #ffffff;border-radius:16px;box-shadow:0 16px 32px rgba(0,0,0,0.14);overflow:hidden;">
+        <div style="position:relative;width:100%;padding-top:75%;">
+          <image-slot id="ideaOverlay" shape="rect" src="./assets/idea_overlay_v2.jpg" placeholder="Фото — деталь интерьера" style="position:absolute;inset:0;width:100%;height:100%;"></image-slot>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio" style="padding:clamp(48px,7vw,88px) clamp(16px,4vw,48px);position:relative;background:#f5f5f7;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <h2 style="font-weight:600;letter-spacing:-0.015em;font-size:clamp(1.4rem,2.6vw,1.9rem);margin:0;">Портфолио</h2>
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:10px;">
+          <button onClick="{{ scrollPortfolioLeft }}" aria-label="Назад" style="width:34px;height:34px;border-radius:50%;border:none;background:#ffffff;color:{{ accentColor }};cursor:pointer;font-size:16px;">‹</button>
+          <button onClick="{{ scrollPortfolioRight }}" aria-label="Далее" style="width:34px;height:34px;border-radius:50%;border:none;background:#ffffff;color:{{ accentColor }};cursor:pointer;font-size:16px;">›</button>
+        </div>
+      </sc-if>
+    </div>
+    <div id="portfolioTrack" ref="{{ portfolioTrackRef }}" style="display:flex;gap:clamp(16px,2.5vw,24px);overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:6px;touch-action:pan-x pan-y;">
+      <sc-for list="{{ portfolioItems }}" as="p" hint-placeholder-count="5">
+        <div style="flex:0 0 clamp(230px,78vw,300px);scroll-snap-align:start;">
+          <div style="position:relative;width:100%;padding-top:75%;border-radius:16px;overflow:hidden;">
+            <image-slot id="{{ p.id }}" shape="rect" src="{{ p.src }}" placeholder="{{ p.placeholder }}" style="position:absolute;inset:0;width:100%;height:100%;"></image-slot>
+          </div>
+          <div style="margin-top:12px;font-weight:600;font-size:14px;letter-spacing:-0.01em;">{{ p.title }}</div>
+          <div style="margin-top:4px;color:#6e6e73;font-size:13px;">{{ p.desc }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="position:absolute;top:80px;right:clamp(16px,4vw,48px);bottom:0;width:56px;background:linear-gradient(90deg, rgba(245,245,247,0), #f5f5f7);pointer-events:none;"></div>
+  </section>
+
+  <section style="padding:clamp(48px,7vw,88px) clamp(16px,4vw,48px);">
+    <h2 style="font-weight:600;letter-spacing:-0.015em;font-size:clamp(1.6rem,3vw,2.1rem);text-align:center;margin:0 0 8px;">Никаких компромиссов.</h2>
+    <p style="text-align:center;color:#6e6e73;font-size:16px;margin:0 0 clamp(32px,4vw,48px);">Только материалы премиум-класса.</p>
+    <div style="display:grid;grid-template-columns:{{ cols4 }};grid-auto-rows:min-content;align-items:start;column-gap:clamp(18px,3vw,24px);row-gap:clamp(36px,5vw,48px);max-width:1180px;margin:0 auto;">
+      <sc-for list="{{ materials }}" as="m" hint-placeholder-count="3">
+        <div>
+          <image-slot id="{{ m.id }}v2" shape="rounded" radius="16" src="{{ m.src }}" placeholder="{{ m.placeholder }}" style="display:block;width:100%;aspect-ratio:4/3;"></image-slot>
+          <div style="margin-top:12px;font-weight:600;font-size:14px;letter-spacing:-0.01em;">{{ m.title }}</div>
+          <div style="margin-top:4px;color:#6e6e73;font-size:13px;">{{ m.desc }}</div>
+        </div>
+      </sc-for>
+      <div>
+        <div style="position:relative;width:100%;padding-top:75%;border-radius:16px;overflow:hidden;background:#f5f5f7;">
+          <image-slot id="hardware" shape="rect" fit="cover" src="./assets/hardware_v2.jpg" placeholder="Фото — фурнитура и механизмы" style="position:absolute;inset:0;width:100%;height:100%;"></image-slot>
+        </div>
+        <div style="margin-top:12px;font-weight:600;font-size:14px;letter-spacing:-0.01em;">Надёжная фурнитура</div>
+        <div style="margin-top:4px;color:#6e6e73;font-size:13px;">Используем только проверенные механизмы высокого качества. Плавное и бесшумное закрывание фасадов, надёжность в каждой детали и гарантия на 100 000+ циклов работы.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cases" style="padding:clamp(48px,7vw,88px) clamp(16px,4vw,48px);background:#f5f5f7;">
+    <h2 style="font-weight:600;letter-spacing:-0.015em;font-size:clamp(1.6rem,3.2vw,2.3rem);line-height:1.15;margin:0 0 8px;max-width:640px;">Ожидание = реальность.</h2>
+    <p style="color:#6e6e73;font-size:16px;margin:0 0 clamp(32px,4vw,44px);">Посмотрите наши недавние проекты.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:clamp(24px,4vw,40px);align-items:center;background:#ffffff;border-radius:20px;padding:clamp(20px,3vw,28px);">
+      <div style="position:relative;width:100%;padding-top:75%;border-radius:16px;overflow:hidden;">
+        <image-slot id="case1" shape="rect" src="./assets/case1_v2.jpg" placeholder="Фото / рендер проекта" style="position:absolute;inset:0;width:100%;height:100%;"></image-slot>
+      </div>
+      <div>
+        <div style="margin-bottom:14px;"><span style="font-weight:600;font-size:14px;">Задача:</span> <span style="color:#6e6e73;font-size:14px;">{{ caseStudy.task }}</span></div>
+        <div style="margin-bottom:14px;"><span style="font-weight:600;font-size:14px;">Материалы:</span> <span style="color:#6e6e73;font-size:14px;">{{ caseStudy.materials }}</span></div>
+        <div style="margin-bottom:14px;"><span style="font-weight:600;font-size:14px;">Срок реализации:</span> <span style="color:#6e6e73;font-size:14px;">{{ caseStudy.duration }}</span></div>
+        <div style="margin-bottom:24px;"><span style="font-weight:600;font-size:14px;">Особенность:</span> <span style="color:#6e6e73;font-size:14px;">{{ caseStudy.feature }}</span></div>
+        <a href="#contact" onClick="{{ scrollToContact }}" style="display:inline-block;background:{{ accentColor }};color:#ffffff;padding:12px 22px;border-radius:980px;font-size:14px;font-weight:400;">Хочу похожий проект</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(48px,7vw,88px) clamp(16px,4vw,48px);">
+    <h2 style="font-weight:600;letter-spacing:-0.015em;font-size:clamp(1.4rem,2.6vw,1.9rem);text-align:center;margin:0 0 clamp(32px,4vw,48px);max-width:720px;margin-left:auto;margin-right:auto;">Ваш путь к идеальному интерьеру</h2>
+<sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:{{ cols4 }};gap:clamp(20px,3vw,28px);max-width:1100px;margin:0 auto;">
+        <sc-for list="{{ processSteps }}" as="step" hint-placeholder-count="4">
+          <div>
+            <div style="width:38px;height:38px;border-radius:50%;background:#f5f5f7;color:{{ accentColor }};display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;margin-bottom:16px;">{{ step.num }}</div>
+            <div style="font-weight:600;font-size:15px;letter-spacing:-0.01em;margin-bottom:6px;">{{ step.title }}</div>
+            <div style="color:#6e6e73;font-size:13.5px;line-height:1.55;">{{ step.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:520px;margin:0 auto;">
+        <sc-for list="{{ processSteps }}" as="step" hint-placeholder-count="4">
+          <div style="display:flex;gap:16px;">
+            <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+              <div style="width:38px;height:38px;border-radius:50%;background:#f5f5f7;color:{{ accentColor }};display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;flex-shrink:0;">{{ step.num }}</div>
+              <sc-if value="{{ step.showLine }}" hint-placeholder-val="{{ true }}">
+                <div style="width:1px;flex:1;background:rgba(0,0,0,0.1);margin-top:6px;"></div>
+              </sc-if>
+            </div>
+            <div style="padding-bottom:32px;">
+              <div style="font-weight:600;font-size:15px;letter-spacing:-0.01em;margin-bottom:6px;">{{ step.title }}</div>
+              <div style="color:#6e6e73;font-size:14px;line-height:1.55;">{{ step.desc }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+  </section>
+
+  <section id="faq" style="padding:clamp(48px,7vw,88px) clamp(16px,4vw,48px);max-width:760px;margin:0 auto;">
+    <h2 style="font-weight:600;letter-spacing:-0.015em;font-size:clamp(1.4rem,2.6vw,1.9rem);text-align:center;margin:0 0 clamp(24px,4vw,36px);">Частые вопросы</h2>
+    <sc-for list="{{ faqItems }}" as="f" hint-placeholder-count="5">
+      <div style="border-bottom:1px solid rgba(0,0,0,0.1);">
+        <button onClick="{{ f.toggle }}" style="width:100%;background:none;border:none;padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;text-align:left;">
+          <span style="font-weight:600;font-size:15px;letter-spacing:-0.01em;">{{ f.q }}</span>
+          <span style="font-size:20px;font-weight:300;color:{{ accentColor }};flex-shrink:0;">{{ f.symbol }}</span>
+        </button>
+        <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:0 0 18px;color:#6e6e73;font-size:14px;line-height:1.6;max-width:640px;">{{ f.a }}</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </section>
+
+  <section id="contact" style="padding:clamp(48px,7vw,88px) clamp(16px,4vw,48px);background:#f5f5f7;">
+    <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:20px;padding:clamp(24px,4vw,40px);">
+      <h2 style="font-weight:600;letter-spacing:-0.015em;font-size:clamp(1.2rem,2.2vw,1.5rem);text-align:center;margin:0 0 10px;">Готовы обсудить вашу идею?</h2>
+      <p style="text-align:center;color:#6e6e73;font-size:13.5px;margin:0 0 24px;line-height:1.5;">Пришлите чертёж, набросок или просто фотографию из Pinterest. Ведущий технолог оперативно просчитает бюджет и предложит несколько вариантов оптимизации под ваш запрос.</p>
+
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submitForm }}">
+          <input type="text" placeholder="Ваше имя" value="{{ name }}" onChange="{{ setName }}" required="{{ true }}" style="width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid rgba(0,0,0,0.12);font-size:15px;margin-bottom:14px;background:#f5f5f7;"/>
+          <input type="tel" placeholder="Ваш WhatsApp" value="{{ phone }}" onChange="{{ setPhone }}" required="{{ true }}" style="width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px solid rgba(0,0,0,0.12);font-size:15px;margin-bottom:14px;background:#f5f5f7;"/>
+          <label style="display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:14px;border-radius:12px;border:1px dashed rgba(0,0,0,0.18);font-size:14px;margin-bottom:18px;background:#f5f5f7;color:#6e6e73;cursor:pointer;">
+            📎 {{ fileLabel }}
+            <input type="file" onChange="{{ setFile }}" style="display:none;"/>
+          </label>
+          <button type="submit" style="width:100%;background:{{ accentColor }};color:#ffffff;padding:15px;border:none;border-radius:980px;font-size:15px;font-weight:400;cursor:pointer;">Отправить заявку</button>
+          <div style="text-align:center;color:#8a8a8e;font-size:12px;margin-top:14px;">Мы на связи в рабочее время и гарантируем полную конфиденциальность.</div>
+        </form>
+      </sc-if>
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:20px 0;">
+          <div style="font-size:32px;margin-bottom:12px;">✓</div>
+          <div style="font-size:15px;font-weight:600;">Спасибо! Мы свяжемся с вами в ближайшее время.</div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <footer style="background:#ffffff;color:#1d1d1f;padding:clamp(28px,4vw,44px) clamp(16px,4vw,48px);border-top:1px solid rgba(0,0,0,0.08);">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;">
+      <div>
+        <div style="font-weight:600;font-size:15px;letter-spacing:-0.01em;">mebelnazakazalmaty</div>
+        <div style="margin-top:8px;color:#6e6e73;font-size:13px;max-width:280px;line-height:1.5;">Эксклюзивная корпусная мебель в Алматы, {{ contactExtra }}.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;">
+        <a href="#portfolio" onClick="{{ scrollToPortfolio }}" style="color:#6e6e73;">Портфолио</a>
+        <a href="#contact" onClick="{{ scrollToContact }}" style="color:#6e6e73;">Контакты</a>
+      </div>
+    </div>
+    <div style="margin-top:24px;border-top:1px solid rgba(0,0,0,0.08);padding-top:18px;font-size:12px;color:#8a8a8e;text-align:center;">Политика конфиденциальности · © {{ year }} mebelnazakazalmaty.</div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 420, &quot;height&quot;: 900}, &quot;accentColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#0071e3&quot;, &quot;options&quot;: [&quot;#0071e3&quot;, &quot;#1d1d1f&quot;, &quot;#34495e&quot;, &quot;#8a6d3b&quot;], &quot;tsType&quot;: &quot;string&quot;}, &quot;contactExtra&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;выезд по всему городу&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;showFloatingWhatsapp&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}}">
+const ICONS = {
+  kitchen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h16v11a1 1 0 01-1 1H5a1 1 0 01-1-1V8z"/><path d="M4 8l1.5-4h13L20 8"/><path d="M9 12v4M15 12v4"/></svg>',
+  wardrobe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18"/><circle cx="9.5" cy="12" r="0.6" fill="currentColor" stroke="none"/><circle cx="14.5" cy="12" r="0.6" fill="currentColor" stroke="none"/></svg>',
+  bath: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4v-3z"/><path d="M4 12V7a2 2 0 012-2c1 0 1.5.6 1.5 1.5"/><path d="M7 19v2M17 19v2"/></svg>',
+  bed: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 18v-5a2 2 0 012-2h14a2 2 0 012 2v5"/><path d="M3 21v-3M21 21v-3"/><path d="M5 13V8a1 1 0 011-1h5v6"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 3v6c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>',
+  ruler: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8v3M11 8v3M15 8v3"/></svg>',
+  hinge: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/></svg>'
+};
+
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  portfolioTrackRef = React.createRef();
+  state = {
+    isMobile: typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(max-width: 899px)').matches
+      : (typeof window !== 'undefined' ? window.innerWidth < 900 : false),
+    menuOpen: false,
+    name: '',
+    phone: '',
+    fileName: '',
+    submitted: false,
+    openFaq: 0
+  };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(max-width: 899px)');
+    this._check = (e) => {
+      const isMobile = e ? e.matches : this._mq.matches;
+      if (isMobile !== this.state.isMobile) this.setState({ isMobile });
+    };
+    this._check();
+    this._t1 = setTimeout(this._check, 50);
+    this._t2 = setTimeout(this._check, 300);
+    if (this._mq.addEventListener) this._mq.addEventListener('change', this._check);
+    else this._mq.addListener(this._check);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this._t1);
+    clearTimeout(this._t2);
+    if (this._mq.removeEventListener) this._mq.removeEventListener('change', this._check);
+    else this._mq.removeListener(this._check);
+  }
+
+  toggleMenu = () => this.setState(s => ({ menuOpen: !s.menuOpen }));
+
+  scrollToId = (id) => (e) => {
+    if (e) e.preventDefault();
+    this.setState({ menuOpen: false });
+    const el = document.getElementById(id);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 60;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  setName = (e) => this.setState({ name: e.target.value });
+  setPhone = (e) => this.setState({ phone: e.target.value });
+  setFile = (e) => this.setState({ fileName: (e.target.files && e.target.files[0]) ? e.target.files[0].name : '' });
+  toggleFaq = (i) => () => this.setState(s => ({ openFaq: s.openFaq === i ? -1 : i }));
+
+  scrollPortfolio = (dir) => () => {
+    const el = this.portfolioTrackRef.current;
+    if (!el) return;
+    const card = el.firstElementChild;
+    const step = card ? card.getBoundingClientRect().width + 20 : 300;
+    el.scrollBy({ left: dir * step, behavior: 'smooth' });
+  };
+
+  submitForm = (e) => {
+    e.preventDefault();
+    this.setState({ submitted: true });
+  };
+
+  renderVals() {
+    const accentColor = this.props.accentColor ?? '#0071e3';
+    const showFloatingWhatsapp = this.props.showFloatingWhatsapp ?? true;
+    const phoneDigits = '77073129777';
+
+    const faqData = [
+      { q: 'Сколько занимает изготовление мебели?', a: 'В среднем от 30 до 45 дней с момента подписания договора и утверждения дизайн-проекта — точный срок фиксируется в смете.' },
+      { q: 'Даёте ли гарантию?', a: 'Да, гарантия на мебель и фурнитуру Blum/Hettich — не менее 100 000 циклов открывания без потери плавности хода.' },
+      { q: 'Можно ли рассчитать стоимость по моим размерам без замера?', a: 'Да, пришлите размеры или готовый дизайн-проект в форму ниже — технолог сделает предварительный расчёт.' },
+      { q: 'Выезжаете на замер бесплатно?', a: 'Да, инженерный замер с образцами материалов бесплатен в пределах Алматы.' },
+      { q: 'Что если сроки сдачи будут нарушены?', a: 'Срок фиксируется в договоре. При задержке по нашей вине выплачивается неустойка.' }
+    ];
+
+    return {
+      rootRef: this.rootRef,
+      isMobile: this.state.isMobile,
+      isDesktop: !this.state.isMobile,
+      menuOpen: this.state.menuOpen && this.state.isMobile,
+      toggleMenu: this.toggleMenu,
+      scrollToAbout: this.scrollToId('about'),
+      scrollToPortfolio: this.scrollToId('portfolio'),
+      scrollToContact: this.scrollToId('contact'),
+      accentColor,
+      heroAspect: this.state.isMobile ? '3/4' : '16/6.5',
+      cols3: this.state.isMobile ? '1fr' : 'repeat(3, 1fr)',
+      cols4: this.state.isMobile ? '1fr' : 'repeat(4, 1fr)',
+      portfolioTrackRef: this.portfolioTrackRef,
+      scrollPortfolioLeft: this.scrollPortfolio(-1),
+      scrollPortfolioRight: this.scrollPortfolio(1),
+      statsDisplay: this.state.isMobile ? 'flex' : 'grid',
+      statsJustify: this.state.isMobile ? 'space-between' : 'center',
+      statsPadding: this.state.isMobile ? '12px 0' : '10px 20px',
+      stats: [0, 1, 2].map((i) => {
+        const data = [
+          { number: '20+', label: 'лет экспертности' },
+          { number: 'Сотни', label: 'реализованных VIP-объектов' },
+          { number: '100%', label: 'строгое соблюдение контракта' }
+        ][i];
+        const divider = '1px solid rgba(255,255,255,0.12)';
+        return {
+          ...data,
+          borderTop: (this.state.isMobile && i > 0) ? divider : 'none',
+          borderLeft: (!this.state.isMobile && i > 0) ? divider : 'none'
+        };
+      }),
+      trustPoints: [
+        { title: 'Прозрачное ценообразование', desc: 'Сумма фиксируется в договоре. Никаких внезапных доплат в процессе производства.', iconHtml: { __html: ICONS.shield } },
+        { title: 'Юридическая гарантия сроков', desc: 'График соблюдается неукоснительно. Любые задержки компенсируем за свой счёт.', iconHtml: { __html: ICONS.clock } },
+        { title: 'Архитектурная точность', desc: 'Инженерный отдел филигранно учитывает все особенности помещения — результат выглядит как идеальный монолит без единого лишнего зазора.', iconHtml: { __html: ICONS.ruler } }
+      ],
+      categories: [
+        { title: 'Кухонные гарнитуры', desc: 'Центр притяжения вашего дома. Инновационная эргономика, сверхпрочные кварцевые столешницы и абсолютно бесшумные скрытые механизмы.', iconHtml: { __html: ICONS.kitchen } },
+        { title: 'Интеллектуальные гардеробные', desc: 'Системы хранения, которые становятся стильным продолжением комнаты. Используем каждый свободный сантиметр без компромиссов.', iconHtml: { __html: ICONS.wardrobe } },
+        { title: 'Приватные зоны (спальни и ванные)', desc: 'Влагонепроницаемый керамогранит для мокрых зон и благородный шпон дерева — для максимального уюта и долговечности.', iconHtml: { __html: ICONS.bath } }
+      ],
+      portfolioItems: [
+        { id: 'portfolio2', src: './assets/portfolio2.jpg', placeholder: 'Фото — проект', title: 'Торговая стойка', desc: 'Мебель для ритейла.' },
+        { id: 'portfolio3', src: './assets/root2.jpg', placeholder: 'Фото — проект', title: 'Лестница и обшивка', desc: 'Массив дерева.' },
+        { id: 'portfolio4', src: './assets/root1.jpg', placeholder: 'Фото — проект', title: 'Прихожая', desc: 'Консоль и зеркало.' },
+        { id: 'portfolio5', src: './assets/portfolio5.jpg', placeholder: 'Фото — проект', title: 'Гардеробная комната', desc: 'Организация пространства.' }
+      ],
+      materials: [
+        { id: 'material1', src: './assets/material1_v3.jpg', placeholder: 'Фото — столешница из массива', title: 'Долговечные покрытия', desc: 'Надёжные столешницы из массива. Благодаря современным многослойным лакам и маслам дерево не боится влаги, на нём не остаётся пятен от напитков и оно защищено от повседневного износа.' },
+        { id: 'material2', src: './assets/material2_v2.jpg', placeholder: 'Фото — массив дерева', title: 'Благородная древесина', desc: 'Массив дуба и натуральный шпон для акцентных деталей. Каждое изделие обладает неповторимой природной фактурой и уникальным рисунком, созданным самой природой.' },
+        { id: 'material3', src: './assets/material3_v2.jpg', placeholder: 'Фото — сборка и стыки фасадов', title: 'Идеальная геометрия и сборка', desc: 'Бесшовные соединения и филигранная обработка поверхностей. Создаём эстетичную, надёжную мебель с монолитным эффектом для ультрасовременного дизайна.' }
+      ],
+      hardwareIconHtml: { __html: ICONS.hinge },
+      caseStudy: {
+        task: 'Прямая кухня в частном доме в Алматы.',
+        materials: 'Верхние фасады — эмаль, нижние — шпон американского ореха, столешница — гранитный камень, латунная фурнитура.',
+        duration: '35 дней.',
+        feature: 'Подобрали фактурную плитку под фартук и скрыли вытяжку в верхнем ряду шкафов.'
+      },
+      processSteps: [
+        { num: 1, title: 'Экспертный аудит', desc: 'Специалист выезжает на объект с каталогами текстур и проводит точное лазерное сканирование стен.', showLine: true },
+        { num: 2, title: 'Визуализация и расчёт', desc: 'Вы утверждаете фотореалистичный рендер и прозрачную смету — после этого заключаем официальный контракт.', showLine: true },
+        { num: 3, title: 'Высокоточное производство', desc: 'Каждая деталь создаётся на передовых европейских станках под строгим контролем качества.', showLine: true },
+        { num: 4, title: 'Финальный штрих', desc: 'Бригада аккуратно доставляет заказ, выполняет профессиональный монтаж «под ключ» и полностью убирает за собой.', showLine: false }
+      ],
+      faqItems: faqData.map((item, i) => ({
+        q: item.q,
+        a: item.a,
+        open: this.state.openFaq === i,
+        symbol: this.state.openFaq === i ? '−' : '+',
+        toggle: this.toggleFaq(i)
+      })),
+      name: this.state.name,
+      setName: this.setName,
+      phone: this.state.phone,
+      setPhone: this.setPhone,
+      setFile: this.setFile,
+      fileLabel: this.state.fileName || 'Прикрепить файл / ссылку на проект',
+      submitForm: this.submitForm,
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      whatsappHref: 'https://wa.me/' + phoneDigits,
+      instagramHref: 'https://instagram.com/mebelnazakazalmaty',
+      phoneDisplay: '+7 707 312 97 77',
+      contactExtra: this.props.contactExtra ?? 'выезд по всему городу',
+      showFloatingWhatsapp,
+      year: new Date().getFullYear()
+    };
+  }
+}
+</script>
+</body>
+</html>
